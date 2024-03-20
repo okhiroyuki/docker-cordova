@@ -49,5 +49,3 @@ RUN chmod a+x -R $ANDROID_SDK_ROOT && \
     apt-get autoremove -y && \
     apt-get clean && \
     gradle -v && java -version
-
-RUN yes | sdkmanager --licenses
