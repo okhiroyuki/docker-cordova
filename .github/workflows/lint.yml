@@ -1,4 +1,4 @@
-name: tasks
+name: lint
 
 on:
   pull_request:
@@ -9,15 +9,22 @@ on:
       - main
 
 jobs:
-  lint:
+  dprint:
     runs-on: ubuntu-latest
     steps:
       - uses: actions/checkout@v4
-      - uses: jbergstroem/hadolint-gh-action@v1
-        with:
-          dockerfile: "**/Dockerfile"
       - uses: dprint/check@v2.2
       - name: Install Task
         uses: arduino/setup-task@v1
       - name: Run lint
         run: task lint:dprint
+  hadolint:
+    runs-on: ubuntu-latest
+    env:
+      HADOLINT_RECURSIVE: "true"
+    steps:
+      - uses: actions/checkout@v4
+      - name: Run Hadolint
+        uses: hadolint/hadolint-action@v2.0.0
+        with:
+          recursive: true
