@@ -13,7 +13,7 @@ FROM java AS android
 
 ENV ANDROID_SDK_URL="https://dl.google.com/android/repository/commandlinetools-linux-11076708_latest.zip" \
     ANDROID_BUILD_TOOLS_VERSION="33.0.2" \
-    ANDROID_PLATFORM="android-31" \
+    ANDROID_PLATFORM="android-33" \
     NDK_VERSION="24.0.8215888" \
     CMAKE_VERSION="3.22.1" \
     GRADLE_HOME="/usr/share/gradle" \
