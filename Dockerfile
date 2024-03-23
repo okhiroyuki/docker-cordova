@@ -16,7 +16,6 @@ ENV ANDROID_SDK_URL="https://dl.google.com/android/repository/commandlinetools-l
     ANDROID_PLATFORM="android-33" \
     NDK_VERSION="24.0.8215888" \
     CMAKE_VERSION="3.22.1" \
-    GRADLE_VERSION="7.3.3" \
     GRADLE_HOME="/usr/share/gradle" \
     ANDROID_SDK_ROOT="/opt/android" \
     ANDROID_HOME="/opt/android"
