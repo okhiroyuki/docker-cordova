@@ -1,4 +1,4 @@
-name: release
+name: tasks
 
 on:
   pull_request:
@@ -11,18 +11,12 @@ on:
 jobs:
   lint:
     runs-on: ubuntu-latest
+    container: hadolint/hadolint:latest-debian
     steps:
       - uses: actions/checkout@v4
-      - uses: dprint/check@v2.2
-      - name: Install hadolint
-        run: |
-          docker pull hadolint/hadolint:latest
-          container_id=$(docker create hadolint/hadolint)
-          docker cp $container_id:/bin/hadolint .
-      - name: Setup go-task
-          uses: pnorton5432/setup-task@v1
-            with:
-              task-version: 3.35.1
-      - name: lint
-        with:
-          run: task lint
+      - name: Install dprint
+        uses: dprint/check@v2.2
+      - name: Install Task
+        uses: arduino/setup-task@v1
+      - name: Run lint
+        run: task lint
