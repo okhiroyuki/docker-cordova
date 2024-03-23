@@ -3,7 +3,6 @@ FROM mcr.microsoft.com/devcontainers/base
 
 ENV HADOLINT="2.12.0"
 
-# hadolint ignore=DL3008
 RUN apt-get update && \
     apt-get -y install curl --no-install-recommends && \
     apt-get clean && \
