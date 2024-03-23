@@ -11,13 +11,13 @@ ENV JAVA_HOME=/usr/lib/jvm/java-17-openjdk-amd64
 
 FROM java AS android
 
-ARG ANDROID_SDK_URL
-ARG ANDROID_BUILD_TOOLS_VERSION
-ARG ANDROID_PLATFORM
-ARG NDK_VERSION
-ARG CMAKE_VERSION
-
-ENV GRADLE_HOME="/usr/share/gradle" \
+ENV ANDROID_SDK_URL="https://dl.google.com/android/repository/commandlinetools-linux-11076708_latest.zip" \
+    ANDROID_BUILD_TOOLS_VERSION="33.0.2" \
+    ANDROID_PLATFORM="android-33" \
+    NDK_VERSION="24.0.8215888" \
+    CMAKE_VERSION="3.22.1" \
+    GRADLE_VERSION="7.3.3" \
+    GRADLE_HOME="/usr/share/gradle" \
     ANDROID_SDK_ROOT="/opt/android" \
     ANDROID_HOME="/opt/android"
 
