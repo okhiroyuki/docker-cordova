@@ -5,6 +5,9 @@ tasks:
     cmds:
       - hadolint Dockerfile
       - hadolint .devcontainer/Dockerfile
+      - task lint:dprint
+  lint:dprint:
+    cmds:
       - dprint check
   fmt:
     cmds:
