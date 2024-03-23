@@ -10,12 +10,14 @@ RUN apt-get update && \
 ENV JAVA_HOME=/usr/lib/jvm/java-17-openjdk-amd64
 
 FROM java AS android
-ENV ANDROID_SDK_URL="https://dl.google.com/android/repository/commandlinetools-linux-11076708_latest.zip" \
-    ANDROID_BUILD_TOOLS_VERSION=33.0.2 \
-    ANDROID_PLATFORM="android-33" \
-    NDK_VERSION="24.0.8215888" \
-    CMAKE_VERSION="3.22.1" \
-    GRADLE_HOME="/usr/share/gradle" \
+
+ARG ANDROID_SDK_URL
+ARG ANDROID_BUILD_TOOLS_VERSION
+ARG ANDROID_PLATFORM
+ARG NDK_VERSION
+ARG CMAKE_VERSION
+
+ENV GRADLE_HOME="/usr/share/gradle" \
     ANDROID_SDK_ROOT="/opt/android" \
     ANDROID_HOME="/opt/android"
 
@@ -29,26 +31,24 @@ RUN apt-get update && \
     apt-get clean && \
     rm -rf /var/lib/apt/lists/*
 
-# Installs Android SDK
-WORKDIR /opt/android
-SHELL ["/bin/bash", "-o", "pipefail", "-c"]
-RUN wget -qO tools.zip ${ANDROID_SDK_URL} && \
-    unzip tools.zip && \
-    rm tools.zip
-WORKDIR /opt/android/cmdline-tools
-RUN mkdir latest && \
-    mv cmdline-tools latest
+WORKDIR $ANDROID_SDK_ROOT
+RUN wget -qO tools.zip $ANDROID_SDK_URL && \
+    unzip tools.zip && rm tools.zip
 
-SHELL ["/bin/bash", "-o", "pipefail", "-c"]
-WORKDIR /root/.android
-RUN touch /root/.android/repositories.cfg && \
+WORKDIR $ANDROID_SDK_ROOT/cmdline-tools
+# hadolint ignore=SC2010,DL4006
+RUN mkdir latest && \
+    ls | grep -v latest | xargs mv -t latest
+
+# hadolint ignore=DL4006
+RUN mkdir /root/.android && touch /root/.android/repositories.cfg && \
     while true; do echo 'y'; sleep 2; done | sdkmanager \
     "platform-tools" \
-    "build-tools;${ANDROID_BUILD_TOOLS_VERSION}" \
+    "build-tools;$ANDROID_BUILD_TOOLS_VERSION" \
     "ndk-bundle" \
-    "platforms;${ANDROID_PLATFORM}" \
-    "ndk;${NDK_VERSION}" \
-    "cmake;${CMAKE_VERSION}"
+    "platforms;$ANDROID_PLATFORM" \
+    "ndk;$NDK_VERSION" \
+    "cmake;$CMAKE_VERSION"
 
 RUN chmod a+x -R $ANDROID_SDK_ROOT && \
     chown -R root:root $ANDROID_SDK_ROOT && \
