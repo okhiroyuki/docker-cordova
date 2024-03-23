@@ -1,0 +1,11 @@
+version: '3'
+
+tasks:
+  lint:
+    cmds:
+      - hadolint Dockerfile
+      - hadolint .devcontainer/Dockerfile
+      - dprint check
+  fmt:
+    cmds:
+      - dprint fmt
