@@ -1,0 +1,21 @@
+---
+repos:
+  - repo: https://github.com/adrienverge/yamllint.git
+    rev: v1.35.1
+    hooks:
+      - id: yamllint
+        args: [--strict, -c=.yamllint]
+
+  - repo: local
+    hooks:
+      - id: hadolint
+        name: hadolint Dockerfile
+        entry: hadolint Dockerfile
+        files: Dockerfile
+        language: system
+
+      - id: dprint
+        name: dprint fmt
+        entry: dprint fmt
+        args: ['--allow-no-files']
+        language: system
